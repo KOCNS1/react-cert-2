@@ -5,7 +5,7 @@ type Props = {};
 
 const App = (props: Props) => {
   return (
-    <div className='container h-screen w-screen mx-auto'>
+    <div className='container h-screen w-screen mx-auto py-4'>
       <Outlet />
     </div>
   );

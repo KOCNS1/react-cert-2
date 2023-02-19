@@ -3,7 +3,7 @@ import { Team } from "../../../models/teams";
 import { getAllTeams } from "../../../services/team.service";
 
 const useGetTeams = () => {
-  const [teams, setTeams] = useState<Team[] | null>([]);
+  const [teams, setTeams] = useState<Team[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

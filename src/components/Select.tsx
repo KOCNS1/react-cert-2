@@ -1,40 +1,46 @@
 import { Listbox, Transition } from "@headlessui/react";
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
 import classNames from "classnames";
 import { Team } from "../models/teams";
 
 type Props = {
   teams: Team[];
+  selected: Team | null;
+  setSelected: React.Dispatch<React.SetStateAction<Team | null>>;
 };
 
-const Select = ({ teams }: Props) => {
-  const [selected, setSelected] = useState(teams[0]);
+const Select = ({ teams, selected, setSelected }: Props) => {
+  useEffect(() => {
+    setSelected(teams[0]);
+  }, [teams, setSelected]);
 
   return (
     <Listbox value={selected} onChange={setSelected}>
       {({ open }) => (
-        <>
-          <Listbox.Label className='block text-sm font-medium text-gray-700'>
+        <div className='w-full max-w-2xl' id='teamSelect'>
+          <Listbox.Label className='block text-xl font-medium text-gray-700'>
             Select a team
           </Listbox.Label>
           <div className='relative mt-1'>
-            <Listbox.Button className='relative w-full cursor-default rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 text-left shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm'>
-              <span className='flex items-center'>
-                <img
-                  src={`https://interstate21.com/nba-logos/${selected.abbreviation}.png`}
-                  alt=''
-                  className='h-6 w-6 flex-shrink-0 rounded-full'
-                />
-                <span className='ml-3 block truncate'>{selected.name}</span>
-              </span>
-              <span className='pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2'>
-                <ChevronUpDownIcon
-                  className='h-5 w-5 text-gray-400'
-                  aria-hidden='true'
-                />
-              </span>
-            </Listbox.Button>
+            {selected && (
+              <Listbox.Button className='relative w-full cursor-default rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 text-left shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm'>
+                <span className='flex items-center'>
+                  <img
+                    src={`https://interstate21.com/nba-logos/${selected.abbreviation}.png`}
+                    alt=''
+                    className='h-6 w-6 flex-shrink-0 rounded-full'
+                  />
+                  <span className='ml-3 block truncate'>{selected.name}</span>
+                </span>
+                <span className='pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2'>
+                  <ChevronUpDownIcon
+                    className='h-5 w-5 text-gray-400'
+                    aria-hidden='true'
+                  />
+                </span>
+              </Listbox.Button>
+            )}
 
             <Transition
               show={open}
@@ -90,7 +96,7 @@ const Select = ({ teams }: Props) => {
               </Listbox.Options>
             </Transition>
           </div>
-        </>
+        </div>
       )}
     </Listbox>
   );
