@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+
 import { Team } from "../../../models/teams";
 import { getAllTeams } from "../../../services/team.service";
 
